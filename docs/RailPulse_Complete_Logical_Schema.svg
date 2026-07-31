@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180">
+  <defs>
+    <style>
+      .title { font: 700 30px 'Segoe UI', Arial, sans-serif; fill: #172033; }
+      .subtitle { font: 16px 'Segoe UI', Arial, sans-serif; fill: #526078; }
+      .group-title { font: 700 19px 'Segoe UI', Arial, sans-serif; fill: #26324a; }
+      .table-title { font: 700 17px 'Segoe UI', Arial, sans-serif; fill: #ffffff; }
+      .column { font: 14px Consolas, 'Courier New', monospace; fill: #26324a; }
+      .key { font-weight: 700; fill: #8a3ffc; }
+      .note { font: 13px 'Segoe UI', Arial, sans-serif; fill: #5c6982; }
+      .card { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; rx: 10; }
+      .live-head { fill: #1976d2; }
+      .gtfs-head { fill: #2e7d32; }
+      .view-head { fill: #7b1fa2; }
+      .physical { fill: none; stroke: #40546f; stroke-width: 2.5; marker-end: url(#arrow); }
+      .logical { fill: none; stroke: #8e44ad; stroke-width: 3; stroke-dasharray: 10 7; marker-end: url(#purple-arrow); }
+      .dependency { fill: none; stroke: #8e44ad; stroke-width: 2; stroke-dasharray: 6 6; marker-end: url(#purple-arrow); }
+      .relation-label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #40546f; }
+      .logical-label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #7b1fa2; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#40546f"/>
+    </marker>
+    <marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8e44ad"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#172033" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="1180" fill="#f7f9fc"/>
+  <text x="50" y="52" class="title">RailPulse Complete Logical Schema</text>
+  <text x="50" y="81" class="subtitle">Azure SQL — live iRail observations, migrated SNCB GTFS, and BI-ready logical views</text>
+
+  <rect x="35" y="110" width="550" height="650" rx="18" fill="#eaf4ff" stroke="#90caf9" stroke-width="2"/>
+  <text x="60" y="145" class="group-title">LIVE IRAIL OPERATIONAL MODEL</text>
+
+  <rect x="930" y="110" width="835" height="820" rx="18" fill="#eff9ef" stroke="#a5d6a7" stroke-width="2"/>
+  <text x="955" y="145" class="group-title">SPRINT 1 — STATIC SNCB GTFS MODEL</text>
+
+  <!-- stations -->
+  <g transform="translate(65,180)" filter="url(#shadow)">
+    <rect class="card" width="225" height="230"/>
+    <path class="live-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">stations</text>
+    <text x="14" y="66" class="column key">PK station_id</text>
+    <text x="14" y="88" class="column">station_uri</text>
+    <text x="14" y="110" class="column">standard_name</text>
+    <text x="14" y="132" class="column">display_name</text>
+    <text x="14" y="154" class="column">longitude</text>
+    <text x="14" y="176" class="column">latitude</text>
+    <text x="14" y="198" class="column">created_at_utc</text>
+    <text x="14" y="220" class="column">updated_at_utc</text>
+  </g>
+
+  <!-- vehicles -->
+  <g transform="translate(65,475)" filter="url(#shadow)">
+    <rect class="card" width="225" height="175"/>
+    <path class="live-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">vehicles</text>
+    <text x="14" y="66" class="column key">PK vehicle_id</text>
+    <text x="14" y="88" class="column">short_name</text>
+    <text x="14" y="110" class="column">vehicle_uri</text>
+    <text x="14" y="132" class="column">created_at_utc</text>
+    <text x="14" y="154" class="column">updated_at_utc</text>
+  </g>
+
+  <!-- liveboard -->
+  <g transform="translate(335,180)" filter="url(#shadow)">
+    <rect class="card" width="225" height="540"/>
+    <path class="live-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">liveboard_records</text>
+    <text x="14" y="66" class="column key">PK record_id</text>
+    <text x="14" y="88" class="column key">FK origin_station_id</text>
+    <text x="14" y="110" class="column key">FK destination_station_id</text>
+    <text x="14" y="132" class="column">destination_name</text>
+    <text x="14" y="154" class="column key">FK vehicle_id</text>
+    <text x="14" y="176" class="column">scheduled_departure_at</text>
+    <text x="14" y="198" class="column">delay_seconds</text>
+    <text x="14" y="220" class="column">platform</text>
+    <text x="14" y="242" class="column">platform_is_normal</text>
+    <text x="14" y="264" class="column">is_cancelled</text>
+    <text x="14" y="286" class="column">has_left</text>
+    <text x="14" y="308" class="column">occupancy</text>
+    <text x="14" y="330" class="column">departure_connection</text>
+    <text x="14" y="352" class="column">api_observed_at</text>
+    <text x="14" y="374" class="column">ingested_at_utc</text>
+    <line x1="14" y1="397" x2="211" y2="397" stroke="#d8e0eb"/>
+    <text x="14" y="421" class="note">Unique observation:</text>
+    <text x="14" y="443" class="note">origin + vehicle +</text>
+    <text x="14" y="465" class="note">departure + observed time</text>
+    <text x="14" y="504" class="note">842 historical snapshots*</text>
+    <text x="14" y="524" class="note">*at final verification</text>
+  </g>
+
+  <!-- physical live relationships -->
+  <path class="physical" d="M290 285 H335"/>
+  <text x="299" y="275" class="relation-label">1:N</text>
+  <path class="physical" d="M290 555 H315 V335 H335"/>
+  <text x="298" y="545" class="relation-label">1:N</text>
+
+  <!-- bridge view -->
+  <g transform="translate(650,285)" filter="url(#shadow)">
+    <rect class="card" width="235" height="285" stroke="#ab47bc" stroke-width="2"/>
+    <path class="view-head" d="M0,10 Q0,0 10,0 H225 Q235,0 235,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">vw_station_gtfs_map</text>
+    <text x="14" y="66" class="column">irail_station_id</text>
+    <text x="14" y="88" class="column">shared_station_code</text>
+    <text x="14" y="110" class="column">irail names / coords</text>
+    <text x="14" y="132" class="column">gtfs_stop_id</text>
+    <text x="14" y="154" class="column">gtfs names / coords</text>
+    <text x="14" y="176" class="column">is_gtfs_mapped</text>
+    <line x1="14" y1="196" x2="221" y2="196" stroke="#e1bee7"/>
+    <text x="14" y="220" class="note">Logical join:</text>
+    <text x="14" y="242" class="note">RIGHT(station_id, 7)</text>
+    <text x="14" y="264" class="note">= RIGHT(stop_id, 7)</text>
+  </g>
+
+  <path class="logical" d="M290 340 H620 Q650 340 650 370"/>
+  <text x="405" y="329" class="logical-label">LOGICAL VIEW JOIN</text>
+
+  <!-- GTFS stops -->
+  <g transform="translate(960,175)" filter="url(#shadow)">
+    <rect class="card" width="225" height="345"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">stops</text>
+    <text x="14" y="66" class="column key">PK stop_id</text>
+    <text x="14" y="88" class="column key">FK parent_station</text>
+    <text x="14" y="110" class="column">stop_code</text>
+    <text x="14" y="132" class="column">stop_name</text>
+    <text x="14" y="154" class="column">stop_desc</text>
+    <text x="14" y="176" class="column">stop_lat</text>
+    <text x="14" y="198" class="column">stop_lon</text>
+    <text x="14" y="220" class="column">location_type</text>
+    <text x="14" y="242" class="column">platform_code</text>
+    <text x="14" y="264" class="column">stop_url</text>
+    <text x="14" y="286" class="column">wheelchair_boarding</text>
+    <text x="14" y="308" class="column">zone_id</text>
+    <text x="14" y="332" class="note">2,895 rows</text>
+  </g>
+
+  <path class="logical" d="M885 420 H960"/>
+  <text x="894" y="408" class="logical-label">52 mapped</text>
+  <path class="physical" d="M1020 175 V158 H1125 V175"/>
+  <text x="1030" y="153" class="relation-label">self 1:N</text>
+
+  <!-- stop times -->
+  <g transform="translate(1230,175)" filter="url(#shadow)">
+    <rect class="card" width="225" height="300"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">stop_times</text>
+    <text x="14" y="66" class="column key">PK/FK trip_id</text>
+    <text x="14" y="88" class="column key">PK stop_sequence</text>
+    <text x="14" y="110" class="column key">FK stop_id</text>
+    <text x="14" y="132" class="column">arrival_time</text>
+    <text x="14" y="154" class="column">departure_time</text>
+    <text x="14" y="176" class="column">stop_headsign</text>
+    <text x="14" y="198" class="column">pickup_type</text>
+    <text x="14" y="220" class="column">drop_off_type</text>
+    <text x="14" y="242" class="column">shape_dist_traveled</text>
+    <text x="14" y="280" class="note">2,165,519 rows</text>
+  </g>
+  <path class="physical" d="M1185 300 H1230"/>
+  <text x="1192" y="289" class="relation-label">1:N</text>
+
+  <!-- trips -->
+  <g transform="translate(1500,175)" filter="url(#shadow)">
+    <rect class="card" width="235" height="325"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H225 Q235,0 235,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">trips</text>
+    <text x="14" y="66" class="column key">PK trip_id</text>
+    <text x="14" y="88" class="column key">FK route_id</text>
+    <text x="14" y="110" class="column key">FK service_id</text>
+    <text x="14" y="132" class="column">trip_headsign</text>
+    <text x="14" y="154" class="column">trip_short_name</text>
+    <text x="14" y="176" class="column">direction_id</text>
+    <text x="14" y="198" class="column">block_id</text>
+    <text x="14" y="220" class="column">shape_id</text>
+    <text x="14" y="242" class="column">wheelchair_accessible</text>
+    <text x="14" y="264" class="column">bikes_allowed</text>
+    <text x="14" y="304" class="note">134,809 rows</text>
+  </g>
+  <path class="physical" d="M1500 300 H1455"/>
+  <text x="1460" y="289" class="relation-label">1:N</text>
+
+  <!-- routes -->
+  <g transform="translate(1500,560)" filter="url(#shadow)">
+    <rect class="card" width="235" height="300"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H225 Q235,0 235,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">routes</text>
+    <text x="14" y="66" class="column key">PK route_id</text>
+    <text x="14" y="88" class="column key">FK agency_id</text>
+    <text x="14" y="110" class="column">route_short_name</text>
+    <text x="14" y="132" class="column">route_long_name</text>
+    <text x="14" y="154" class="column">route_desc</text>
+    <text x="14" y="176" class="column">route_type</text>
+    <text x="14" y="198" class="column">route_url</text>
+    <text x="14" y="220" class="column">route_color</text>
+    <text x="14" y="242" class="column">route_text_color</text>
+    <text x="14" y="282" class="note">1,801 rows</text>
+  </g>
+  <path class="physical" d="M1618 560 V500"/>
+  <text x="1628" y="537" class="relation-label">1:N</text>
+
+  <!-- agencies -->
+  <g transform="translate(1500,920)" filter="url(#shadow)">
+    <rect class="card" width="235" height="225"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H225 Q235,0 235,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">agencies</text>
+    <text x="14" y="66" class="column key">PK agency_id</text>
+    <text x="14" y="88" class="column">agency_lang</text>
+    <text x="14" y="110" class="column">agency_name</text>
+    <text x="14" y="132" class="column">agency_timezone</text>
+    <text x="14" y="154" class="column">agency_url</text>
+    <text x="14" y="176" class="column">agency_phone / fare_url</text>
+    <text x="14" y="210" class="note">1 row</text>
+  </g>
+  <path class="physical" d="M1618 920 V860"/>
+  <text x="1628" y="895" class="relation-label">1:N</text>
+
+  <!-- services -->
+  <g transform="translate(1230,560)" filter="url(#shadow)">
+    <rect class="card" width="225" height="300"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">services</text>
+    <text x="14" y="66" class="column key">PK service_id</text>
+    <text x="14" y="88" class="column">monday</text>
+    <text x="14" y="110" class="column">tuesday</text>
+    <text x="14" y="132" class="column">wednesday</text>
+    <text x="14" y="154" class="column">thursday</text>
+    <text x="14" y="176" class="column">friday</text>
+    <text x="14" y="198" class="column">saturday</text>
+    <text x="14" y="220" class="column">sunday</text>
+    <text x="14" y="242" class="column">start_date / end_date</text>
+    <text x="14" y="282" class="note">51,593 rows</text>
+  </g>
+  <path class="physical" d="M1455 650 H1480 V430 H1500"/>
+  <text x="1464" y="638" class="relation-label">1:N</text>
+
+  <!-- service exceptions -->
+  <g transform="translate(960,610)" filter="url(#shadow)">
+    <rect class="card" width="225" height="145"/>
+    <path class="gtfs-head" d="M0,10 Q0,0 10,0 H215 Q225,0 225,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">service_exceptions</text>
+    <text x="14" y="66" class="column key">PK/FK service_id</text>
+    <text x="14" y="88" class="column key">PK exception_date</text>
+    <text x="14" y="110" class="column">exception_type</text>
+    <text x="14" y="134" class="note">4,697,139 rows</text>
+  </g>
+  <path class="physical" d="M1230 685 H1185"/>
+  <text x="1192" y="674" class="relation-label">1:N</text>
+
+  <!-- Analytics views -->
+  <rect x="35" y="790" width="850" height="355" rx="18" fill="#faf0fc" stroke="#ce93d8" stroke-width="2"/>
+  <text x="60" y="825" class="group-title">BI-READY ANALYTICS VIEWS</text>
+
+  <g transform="translate(65,860)" filter="url(#shadow)">
+    <rect class="card" width="355" height="235" stroke="#ab47bc" stroke-width="2"/>
+    <path class="view-head" d="M0,10 Q0,0 10,0 H345 Q355,0 355,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">vw_liveboard_analytics</text>
+    <text x="14" y="66" class="column">historical observations</text>
+    <text x="14" y="88" class="column">origin / destination GTFS IDs</text>
+    <text x="14" y="110" class="column">vehicle and platform fields</text>
+    <text x="14" y="132" class="column">delay_seconds / delay_minutes</text>
+    <text x="14" y="154" class="column">estimated_departure_at</text>
+    <text x="14" y="176" class="column">departure_date / hour</text>
+    <text x="14" y="198" class="column">is_on_time (&lt; 120 seconds)</text>
+    <text x="14" y="222" class="note">Preserves every timer snapshot</text>
+  </g>
+
+  <g transform="translate(485,860)" filter="url(#shadow)">
+    <rect class="card" width="355" height="235" stroke="#ab47bc" stroke-width="2"/>
+    <path class="view-head" d="M0,10 Q0,0 10,0 H345 Q355,0 355,10 V42 H0 Z"/>
+    <text x="14" y="27" class="table-title">vw_latest_liveboard_status</text>
+    <text x="14" y="66" class="column">latest record per departure</text>
+    <text x="14" y="88" class="column">ROW_NUMBER partition:</text>
+    <text x="14" y="110" class="column">- origin_station_id</text>
+    <text x="14" y="132" class="column">- vehicle_id</text>
+    <text x="14" y="154" class="column">- scheduled_departure_at</text>
+    <text x="14" y="188" class="note">Operational current-status KPIs</text>
+    <text x="14" y="214" class="note">467 latest departures*</text>
+  </g>
+
+  <path class="dependency" d="M450 720 V825 H240 V860"/>
+  <path class="dependency" d="M768 570 V780 H240 V860"/>
+  <path class="dependency" d="M420 978 H485"/>
+
+  <!-- Legend -->
+  <g transform="translate(950,985)">
+    <text x="0" y="0" class="group-title">RELATIONSHIP LEGEND</text>
+    <line x1="0" y1="35" x2="90" y2="35" class="physical"/>
+    <text x="110" y="40" class="note">Physical foreign key enforced by Azure SQL</text>
+    <line x1="0" y1="75" x2="90" y2="75" class="logical"/>
+    <text x="110" y="80" class="note">Logical relationship implemented by SQL view</text>
+    <rect x="0" y="105" width="14" height="14" fill="#1976d2"/>
+    <text x="25" y="117" class="note">Live iRail table</text>
+    <rect x="170" y="105" width="14" height="14" fill="#2e7d32"/>
+    <text x="195" y="117" class="note">Static GTFS table</text>
+    <rect x="350" y="105" width="14" height="14" fill="#7b1fa2"/>
+    <text x="375" y="117" class="note">Logical / analytics view</text>
+  </g>
+</svg>
